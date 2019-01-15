@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.material.mapper.MaterialMapper">
+    <select id="listMaterial" resultType="com.material.entity.material.Material">
+       select   materialId,
+                materialName,
+                productDate,
+                validdate,
+                materialNums,
+                materialManufacturers,
+                materialBatchNumber,
+                if(date(now())>=date(validdate),'是','否') hadExpired,
+                date_format(createTime,'%Y-%m-%d %H:%m:%i') createTime,
+                date_format(lastUpdateTime,'%Y-%m-%d %H:%m:%i') lastUpdateTime
+       from material_manage
+       <where>
+            <if test="materialName!=null and materialName!=''">
+                materialName like concat('%',#{materialName},'%')
+            </if>
+            <if test="productDateBegin!=null and productDateBegin!='' and productDateEnd!=null and productDateEnd!=''">
+                and productDate between #{productDateBegin} and #{productDateEnd}
+            </if>
+            <if test="hadExpired!=null and hadExpired!=-1">
+                and (case when #{hadExpired}=1
+                     then date(now())>=date(validdate)
+                          when #{hadExpired}=0
+                     then date(now())<![CDATA[<]]>date(validdate) end)
+            </if>
+            <if test="validdateBegin!=null and validdateBegin!='' and validdateEnd!=null and validdateEnd!=''">
+                and validdate between #{validdateBegin} and #{validdateEnd}
+            </if>
+            <if test="materialIdList!=null and materialIdList.size()>0">
+                and materialId in
+                <foreach collection="materialIdList" item="materialId" open="(" close=")" separator=",">
+                    #{materialId}
+                </foreach>
+            </if>
+       </where>
+        order by validdate asc
+        limit #{min},#{max}
+    </select>
+    <select id="listMaterialCount" resultType="int">
+       select   count(0)
+       from material_manage
+       <where>
+           <if test="materialName!=null and materialName!=''">
+               materialName like concat('%',#{materialName},'%')
+           </if>
+           <if test="productDateBegin!=null and productDateBegin!='' and productDateEnd!=null and productDateEnd!=''">
+               and productDate between #{productDateBegin} and #{productDateEnd}
+           </if>
+           <if test="validdateBegin!=null and validdateBegin!='' and validdateEnd!=null and validdateEnd!=''">
+               and validdate between #{validdateBegin} and #{validdateEnd}
+           </if>
+           <if test="hadExpired!=null and hadExpired!=-1">
+               and (case when #{hadExpired}=1
+               then date(now())>=date(validdate)
+               when #{hadExpired}=0
+               then date(now())<![CDATA[<]]>date(validdate) end)
+           </if>
+           <if test="materialIdList!=null and materialIdList.size()>0">
+               and materialId in
+               <foreach collection="materialIdList" item="materialId" open="(" close=")" separator=",">
+                   #{materialId}
+               </foreach>
+           </if>
+       </where>
+    </select>
+    <insert id="insertMaterial">
+        insert into material_manage(materialName,
+                                    productDate,
+                                    validdate,
+                                    materialNums,
+                                    materialManufacturers,
+                                    materialBatchNumber)
+        values(                     #{materialName},
+                                    #{productDate},
+                                    #{validdate},
+                                    #{materialNums},
+                                    #{materialManufacturers},
+                                    #{materialBatchNumber})
+    </insert>
+    <update id="updateMaterial">
+        update material_manage
+        set materialName=#{materialName},
+            productDate=#{productDate},
+            validdate=#{validdate},
+            materialNums=#{materialNums},
+            materialManufacturers=#{materialManufacturers},
+            materialBatchNumber=#{materialBatchNumber}
+        where materialId=#{materialId}
+    </update>
+    <select id="selectMaterialById" resultType="com.material.entity.material.Material">
+        select  materialId,
+                materialName,
+                productDate,
+                validdate,
+                materialNums,
+                materialManufacturers,
+                materialBatchNumber
+        from material_manage
+        where materialId=#{materialId}
+        limit 1
+    </select>
+    <delete id="deleteMaterial">
+        delete from material_manage
+        where materialId in
+        <foreach collection="list" item="materialId" open="(" close=")" separator=",">
+            #{materialId}
+        </foreach>
+    </delete>
+    <insert id="insertBatchMaterial">
+        insert into material_manage(materialName,
+                                    productDate,
+                                    validdate,
+                                    materialNums,
+                                    materialManufacturers,
+                                    materialBatchNumber)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (                       #{item.materialName},
+                                    #{item.productDate},
+                                    #{item.validdate},
+                                    #{item.materialNums},
+                                    #{item.materialManufacturers},
+                                    #{item.materialBatchNumber})
+        </foreach>
+    </insert>
+</mapper>
