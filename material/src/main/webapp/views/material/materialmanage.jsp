@@ -9,120 +9,121 @@
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="/scripts/user/login.js"></script>
 </head>
 <script type="text/javascript">
     var dataGrid;
     $(function() {
-        dataGrid = $('#dataGrid').datagrid({
-            url : '/materialmanagement/datagrid',
-            fit : true,
-            fitColumns : true,
-            border : false,
-            pagination : true,
-            idField : 'id',
-            pageSize : 10,
-            pageList : [ 10, 20, 30, 40, 50 ],
-            sortName : 'materialName',
-            sortOrder : 'asc',
-            checkOnSelect : false,
-            selectOnCheck : false,
-            nowrap : false,
-            frozenColumns : [ [ {
-                field : 'id',
-                title : '编号',
-                width : 150,
-                checkbox : true
-            }, {
-                field : 'materialName',
-                title : '名称',
-                width : 150
-            } ] ],
-            columns : [ [ {
-                field : 'materialNums',
-                title : '数量',
-                width : 150
-            },{
-                field : 'materialManufacturers',
-                title : '生产厂家',
-                width : 150
-            },{
-                field : 'materialBatchNumber',
-                title : '批号',
-                width : 150
-            }, {
-                field : 'productDate',
-                title : '生产日期',
-                width : 150
+        getData();
+       function getData() {
+           dataGrid = $('#dataGrid').datagrid({
+               url : '/materialmanagement/datagrid',
+               fit : true,
+               fitColumns : true,
+               border : false,
+               pagination : true,
+               idField : 'id',
+               pageSize : 10,
+               pageList : [ 10, 20, 30, 40, 50 ],
+               sortName : 'materialName',
+               sortOrder : 'asc',
+               checkOnSelect : false,
+               selectOnCheck : false,
+               nowrap : false,
+               frozenColumns : [ [ {
+                   field : 'id',
+                   title : '编号',
+                   width : 150,
+                   checkbox : true
+               }, {
+                   field : 'materialName',
+                   title : '名称',
+                   width : 150
+               } ] ],
+               columns : [ [ {
+                   field : 'materialNums',
+                   title : '数量',
+                   width : 150
+               },{
+                   field : 'materialManufacturers',
+                   title : '生产厂家',
+                   width : 150
+               },{
+                   field : 'materialBatchNumber',
+                   title : '批号',
+                   width : 150
+               }, {
+                   field : 'productDate',
+                   title : '生产日期',
+                   width : 150
 
-                }, {
-                field : 'validdate',
-                title : '有效日期',
-                width : 150
-            }, {
-                field : 'hadExpired',
-                title : '是否过期',
-                width : 150
-            }, {
-                field : 'createTime',
-                title : '创建时间',
-                width : 150,
-                sortable : true
-            }, {
-                field : 'lastUpdateTime',
-                title : '最后修改时间',
-                width : 150
-            } ] ],
-            rowStyler: function(index,row){
-                if (row.hadExpired=="是"){
-                    return 'background-color:red;';
-                }
-            },
-            toolbar : [{
-                text:'新建',
-                iconCls:'icon-add',
-                handler:function(){
-                    addFun();
-                }
-            },'-',{
-                text:'编辑',
-                iconCls:'icon-edit',
-                handler:function(){
-                    editFun();
-                }
-            },'-',{
-                text:'删除',
-                iconCls:'icon-remove',
-                handler:function(){
-                    batchDeleteFun();
-                }
-            },'-',{
-                text:'查询',
-                iconCls:'icon-search',
-                handler:function(){
-                    search();
-                }
-            },'-',{
-                text:'清空',
-                iconCls:'icon-clear',
-                handler:function(){
-                    debugger;
-                    $('#searchForm input').val('');
-                    $('#hadExpired').combobox('setValue',"-1");
-                    dataGrid.datagrid('load', {});
-                }
-            }],
+               }, {
+                   field : 'validdate',
+                   title : '有效日期',
+                   width : 150
+               }, {
+                   field : 'hadExpired',
+                   title : '是否过期',
+                   width : 150
+               }, {
+                   field : 'createTime',
+                   title : '创建时间',
+                   width : 150,
+                   sortable : true
+               }, {
+                   field : 'lastUpdateTime',
+                   title : '最后修改时间',
+                   width : 150
+               } ] ],
+               rowStyler: function(index,row){
+                   if (row.hadExpired=="是"){
+                       return 'background-color:red;';
+                   }
+               },
+               toolbar : [{
+                   text:'新建',
+                   iconCls:'icon-add',
+                   handler:function(){
+                       addFun();
+                   }
+               },'-',{
+                   text:'编辑',
+                   iconCls:'icon-edit',
+                   handler:function(){
+                       editFun();
+                   }
+               },'-',{
+                   text:'删除',
+                   iconCls:'icon-remove',
+                   handler:function(){
+                       batchDeleteFun();
+                   }
+               },'-',{
+                   text:'查询',
+                   iconCls:'icon-search',
+                   handler:function(){
+                       search();
+                   }
+               },'-',{
+                   text:'清空',
+                   iconCls:'icon-clear',
+                   handler:function(){
+                       $('#searchForm input').val('');
+                       $('#hadExpired').combobox('setValue',"-1");
+                       dataGrid.datagrid('load', {});
+                   }
+               }],
 
-            onRowContextMenu : function(e, rowIndex, rowData) {
-                e.preventDefault();
-                $(this).datagrid('unselectAll').datagrid('uncheckAll');
-                $(this).datagrid('selectRow', rowIndex);
-                $('#menu').menu('show', {
-                    left : e.pageX,
-                    top : e.pageY
-                });
-            }
-        });
+               onRowContextMenu : function(e, rowIndex, rowData) {
+                   e.preventDefault();
+                   $(this).datagrid('unselectAll').datagrid('uncheckAll');
+                   $(this).datagrid('selectRow', rowIndex);
+                   $('#menu').menu('show', {
+                       left : e.pageX,
+                       top : e.pageY
+                   });
+               }
+           });
+       }
     });
     //将表单序列化
     function serializeObject(form){
@@ -165,7 +166,7 @@
         if(rows!=null&&rows!=undefined&&rows.length==1){
             materialId = rows[0].materialId;
         }else{
-            $.messager.alert('提示','请选择一条数据');
+            $.messager.alert('提示','请选择一条数据',"info");
             return;
         }
         
@@ -204,12 +205,13 @@
                         contentType: "application/json",
                         data:JSON.stringify({materialIds:ids}),
                         success:function (result) {
-                            if (result.res.success) {
-                                parent.$.messager.alert('提示', result.desc, 'info');
+                            if (result.res) {
+                                parent.$.messager.alert('通知', result.desc, 'info');
                                 modalDialog.openner_dataGrid = dataGrid;
+                                modalDialog.openner_dataGrid.datagrid('reload');
                                 dataGrid.datagrid('uncheckAll').datagrid('unselectAll').datagrid('clearSelections');
                             }else{
-                                parent.$.messager.alert('提示', result.desc, 'info');
+                                parent.$.messager.alert('错误', result.desc, 'error');
                             }
                             parent.$.messager.progress('close');
                         }

@@ -19,6 +19,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -50,7 +51,7 @@ public class MaterialService {
         return new Result("success", "删除材料成功");
     }
     public Result materialImportFile(MultipartFile multipartFile) {
-        if (multipartFile == null) {
+        if (multipartFile == null || StringUtils.isEmpty(multipartFile.getOriginalFilename())) {
             return new Result("fail", "请选择材料文件上传");
         }
         String originalFileName = multipartFile.getOriginalFilename();

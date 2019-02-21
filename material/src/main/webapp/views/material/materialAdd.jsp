@@ -19,8 +19,8 @@
 			success : function(result) {
 				parent.$.messager.progress('close');
 				result = $.parseJSON(result);
-				if (result.res.success) {
-                    $.messager.alert('通知', result.desc);
+				if (result.res) {
+                    $.messager.alert('通知', result.desc,"info");
 					modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
 					modalDialog.handler.dialog('close');
 				} else {

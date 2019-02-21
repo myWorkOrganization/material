@@ -9,7 +9,6 @@
     <script type="text/javascript" src="/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
-    <script type="text/javascript" src="/scripts/user/login.js"></script>
 </head>
 <script type="text/javascript">
     function fileUpload() {
@@ -17,10 +16,10 @@
             url:"/materialmanagement/materialImportFile",
             success:function (data) {
                 var result=$.parseJSON(data);
-                if(result.res.success){
-
+                if(result.res){
+                    $.messager.alert("通知",result.desc,"info");
                 }else{
-                    $.messager.alert("提示",result.desc);
+                    $.messager.alert("错误",result.desc,"error");
                 }
 
             }

@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.util.StringUtils;
 
 public class ExcelUtils{
     public static void main(String[] args) {
@@ -91,8 +92,7 @@ public class ExcelUtils{
                 return localArrayList;
             }
         }
-        catch (FileNotFoundException e)
-        {
+        catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -108,7 +108,12 @@ public class ExcelUtils{
         return getExcelContent(wb, columnArr);
     }
 
-    public static Object getCellFormatValue(Cell cell) {
+    /**
+     * 读取Excel单元格的值
+     * @param cell
+     * @return
+     */
+    private static Object getCellFormatValue(Cell cell) {
         Object cellValue = null;
         if (cell != null) {
             switch (cell.getCellTypeEnum()){
@@ -116,15 +121,13 @@ public class ExcelUtils{
                     if (DateUtil.isCellDateFormatted(cell)) {
                         cellValue = DateUtils.dateFormat(cell.getDateCellValue(), "yyyy-MM-dd"); break;
                     }
-                    cellValue = String.valueOf(cell.getNumericCellValue());
+                    cellValue = cell.getNumericCellValue()+"";
                     break;
                 case NUMERIC:
                     if (DateUtil.isCellDateFormatted(cell)) {
                         cellValue = DateUtils.dateFormat(cell.getDateCellValue(), "yyyy-MM-dd"); break;
                     }
-
-                    cellValue = String.valueOf(cell.getNumericCellValue());
-
+                    cellValue = removePoint(cell.getNumericCellValue()+"");
                     break;
                 case STRING:
                     cellValue = cell.getStringCellValue();
@@ -132,9 +135,21 @@ public class ExcelUtils{
                 default:
                     cellValue = ""; break;
             }
+        }else{
+            cellValue = "";
         }
-        else cellValue = "";
-
         return cellValue;
+    }
+
+    /**
+     * 去除字符串中的小数点
+     * @param s
+     * @return
+     */
+    private static String removePoint(String s){
+        if(!StringUtils.isEmpty(s)){
+            s=s.substring(0,s.indexOf("."));
+        }
+        return s;
     }
 }

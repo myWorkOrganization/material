@@ -22,7 +22,6 @@
                 }
             },
             onClick:function(node){
-                debugger;
                 if(node.state=='closed'&&(!$("#menuTree").tree('isLeaf',node.target))){  //状态为关闭而且非叶子节点
                     $(this).tree('expand',node.target);//点击文字展开菜单  
                     if (node.attributes && node.attributes.url) {
@@ -60,6 +59,9 @@
 
 </script>
 <body class="easyui-layout" >
+    <div data-options="region:'north',border:false" style="background: rgb(179, 223, 218);text-align: right; padding:5px;width: 100%; height: 26px;" title="" class="panel-body panel-body-noheader panel-body-noborder layout-body">
+        当前用户：<span id="loginUserName"><%=session.getAttribute("loginUserName")%></span>&nbsp;&nbsp;<a href="/views/user/login.jsp">[退出]</a>
+    </div>
     <div data-options="region:'west',title:'菜单',split:true" style="width:150px;">
         <ul id="menuTree" class="easyui-tree"></ul>
     </div>

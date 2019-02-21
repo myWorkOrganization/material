@@ -19,13 +19,13 @@
 			success : function(result) {
 				parent.$.messager.progress('close');
 				result = $.parseJSON(result);
-				debugger;
-				if (result.res.success) {
-                    $.messager.alert('通知', result.desc);
-					parent.modalDialog.openner_dataGrid.datagrid('reload');//之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
-                    parent.modalDialog.handler.dialog('close');
-                    parent.modalDialog.openner_dataGrid.datagrid('clearChecked');
-				} else {
+				if (result.res) {
+                    $.messager.alert('通知', result.desc,'info');
+                    //之所以能在这里调用到parent.$.modalDialog.openner_dataGrid这个对象，是因为user.jsp页面预定义好了
+                    modalDialog.openner_dataGrid.datagrid('reload');
+                    modalDialog.handler.dialog('close');
+                    modalDialog.openner_dataGrid.datagrid('clearChecked');
+                } else {
 					parent.$.messager.alert('错误', result.desc, 'error');
 				}
 			}

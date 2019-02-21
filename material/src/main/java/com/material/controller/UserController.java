@@ -4,6 +4,8 @@ import com.material.entity.user.Login;
 import com.material.entity.user.Register;
 import com.material.service.UserService;
 import com.material.utils.Result;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @RequestMapping({"/login"})
-    public Result login(@RequestBody @Valid Login login){
-        return this.userService.login(login);
+    public Result login(@RequestBody @Valid Login login,HttpServletRequest request){
+        return this.userService.login(login,request);
     }
 }

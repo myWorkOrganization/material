@@ -9,6 +9,9 @@ import com.material.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @Service
 public class UserService{
 
@@ -35,7 +38,7 @@ public class UserService{
         return new Result("success", "注册用户成功");
     }
 
-    public Result login(Login login) {
+    public Result login(Login login, HttpServletRequest request) {
         User user = new User();
         user.setUserName(login.getUserName());
         User userInfo = this.userMapper.selectUserInfo(user);
@@ -45,6 +48,8 @@ public class UserService{
         if (!MD5.MD5Password(login.getPassword()).equals(userInfo.getUserPwd())) {
             return new Result("fail", "密码错误");
         }
+        HttpSession httpSession=request.getSession();
+        httpSession.setAttribute("loginUserName",login.getUserName());
         return new Result("success", "登陆成功");
     }
 }
