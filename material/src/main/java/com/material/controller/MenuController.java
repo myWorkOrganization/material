@@ -14,8 +14,7 @@ public class MenuController {
     private MenuService menuService;
 
     @RequestMapping({"/tree"})
-    public Result tree()
-    {
+    public Result tree(){
         return this.menuService.tree();
     }
 }

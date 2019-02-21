@@ -20,14 +20,12 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping({"/register"})
-    public Result register(@RequestBody @Valid Register register)
-    {
+    public Result register(@RequestBody @Valid Register register){
         return this.userService.saveUser(register);
     }
 
     @RequestMapping({"/login"})
-    public Result login(@RequestBody @Valid Login login)
-    {
+    public Result login(@RequestBody @Valid Login login){
         return this.userService.login(login);
     }
 }

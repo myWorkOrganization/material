@@ -22,6 +22,7 @@
                 }
             },
             onClick:function(node){
+                debugger;
                 if(node.state=='closed'&&(!$("#menuTree").tree('isLeaf',node.target))){  //状态为关闭而且非叶子节点
                     $(this).tree('expand',node.target);//点击文字展开菜单  
                     if (node.attributes && node.attributes.url) {

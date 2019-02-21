@@ -27,8 +27,7 @@ public class MaterialService {
     @Autowired
     private MaterialMapper materialMapper;
 
-    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper)
-    {
+    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper){
         DataGrid dataGrid = new DataGrid();
         dataGrid.setRows(this.materialMapper.listMaterial(materialRequest));
         dataGrid.setTotal(this.materialMapper.listMaterialCount(materialRequest));
@@ -55,10 +54,10 @@ public class MaterialService {
             return new Result("fail", "请选择材料文件上传");
         }
         String originalFileName = multipartFile.getOriginalFilename();
-        if ((!originalFileName.endsWith("xls")) && (!originalFileName.endsWith("xlsx")))
+        if ((!originalFileName.endsWith("xls")) && (!originalFileName.endsWith("xlsx"))) {
             return new Result("fail", "只能上传.xls和.xlsx文件");
-        try
-        {
+        }
+        try {
             InputStream inputStream = multipartFile.getInputStream();
             if (inputStream == null) {
                 return new Result("fail", "请选择材料文件上传");
@@ -71,10 +70,11 @@ public class MaterialService {
             FileCopyUtils.copy(inputStream, new FileOutputStream(filePath + File.separator + new String(originalFileName.getBytes(), "UTF-8")));
             String[] columnArr = { "materialName", "materialNums", "materialManufacturers", "materialBatchNumber", "productDate", "validdate" };
             List materialList = ExcelUtils.readExcelByPath(filePath + File.separator + new String(originalFileName.getBytes(), "UTF-8"), columnArr);
-            if ((materialList != null) && (!materialList.isEmpty()))
+            if ((materialList != null) && (!materialList.isEmpty())) {
                 this.materialMapper.insertBatchMaterial(materialList);
-            else
+            }else{
                 new Result("fail", "材料文件为空");
+            }
         }
         catch (IOException e) {
             e.printStackTrace();

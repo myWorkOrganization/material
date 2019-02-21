@@ -15,10 +15,8 @@ public class UserService{
     @Autowired
     private UserMapper userMapper;
 
-    public Result saveUser(Register register)
-    {
-        try
-        {
+    public Result saveUser(Register register){
+        try{
             User user = new User();
             user.setUserName(register.getName());
             user.setUserPwd(MD5.MD5Password(register.getPwd()));

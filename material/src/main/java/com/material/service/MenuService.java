@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,18 +19,41 @@ public class MenuService {
     @Autowired
     private MenuMapper menuMapper;
 
-    public Result tree()
-    {
+    public Result tree() {
         List treeList = this.menuMapper.listMenu();
         if ((treeList == null) || (treeList.isEmpty())) {
             return new Result("success", "", "");
         }
-        Tree t = getTree(treeList, (Tree)treeList.get(0));
         List resultList = new ArrayList();
-        resultList.add(t);
+        List<Tree> parentMenuList=getParentMenu(treeList);
+        if(parentMenuList!=null&&parentMenuList.size()>0){
+            for(Tree t:parentMenuList){
+                Tree tree = getTree(treeList, t);
+                resultList.add(tree);
+            }
+        }
         return new Result("success", "获取菜单成功", resultList);
     }
 
+    /**
+     * 获取所有的父级菜单
+     * @param treeList
+     * @return
+     */
+    private List<Tree> getParentMenu(List<Tree> treeList){
+        List<Tree> resultList=new ArrayList<>();
+        if(treeList!=null&&treeList.size()>0){
+            resultList=treeList.stream().filter(t->t.getPid()==0).collect(Collectors.toList());
+        }
+        return resultList;
+    }
+
+    /**
+     * 获取子级菜单
+     * @param treeList
+     * @param p
+     * @return
+     */
     private Tree getTree(List<Tree> treeList, Tree p) {
         List childList = new ArrayList();
         if ((treeList != null) && (!treeList.isEmpty())) {

@@ -46,13 +46,19 @@ public class MaterialController {
     }
     @RequestMapping({"/datagrid"})
     @ResponseBody
-    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper) { return this.materialService.dataGrid(materialRequest, pageHelper); }
+    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper) {
+        return this.materialService.dataGrid(materialRequest, pageHelper);
+    }
     @RequestMapping({"/materialAdd"})
     @ResponseBody
-    public Result materialAdd(MaterialAddRequest materialAddRequest) { return this.materialService.materialAdd(materialAddRequest); }
+    public Result materialAdd(MaterialAddRequest materialAddRequest) {
+        return this.materialService.materialAdd(materialAddRequest);
+    }
     @RequestMapping({"/materialEdit"})
     @ResponseBody
-    public Result materialEdit(MaterialEditRequest materialEditRequest) { return this.materialService.materialEdit(materialEditRequest); }
+    public Result materialEdit(MaterialEditRequest materialEditRequest) {
+        return this.materialService.materialEdit(materialEditRequest);
+    }
     @RequestMapping({"/materialDelete"})
     @ResponseBody
     public Result materialDelete(@RequestBody MaterialDeleteRequest materialDeleteRequest) {
