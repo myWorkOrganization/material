@@ -8,6 +8,7 @@
                url,
                pid
         from sys_menu
+        where isShow=1
         order by id asc
     </select>
 
