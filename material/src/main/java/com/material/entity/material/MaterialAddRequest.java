@@ -7,6 +7,7 @@ public class MaterialAddRequest {
     private String materialNums;
     private String materialManufacturers;
     private String materialBatchNumber;
+    private String deptId;
 
     public String getMaterialName()
     {
@@ -55,5 +56,13 @@ public class MaterialAddRequest {
 
     public void setMaterialBatchNumber(String materialBatchNumber) {
         this.materialBatchNumber = materialBatchNumber;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

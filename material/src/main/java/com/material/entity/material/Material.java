@@ -11,6 +11,7 @@ public class Material {
     private String hadExpired;
     private String createTime;
     private String lastUpdateTime;
+    private String deptName;
 
     public long getMaterialId()
     {
@@ -91,5 +92,13 @@ public class Material {
 
     public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

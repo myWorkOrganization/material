@@ -15,7 +15,8 @@
     </select>
     <select id="selectUserInfo" resultType="com.material.entity.user.User">
         select userName,
-               userPwd
+               userPwd,
+               deptId
         from sys_user info
         where info.userName=#{userName}
     </select>
@@ -24,12 +25,14 @@
                     userName,
                     userPwd,
                     userSex,
-                    userMail
+                    userMail,
+                    deptId
         )values (
                     #{userName},
                     #{userPwd},
                     #{userSex},
-                    #{userMail}
+                    #{userMail},
+                    #{deptId}
         )
     </insert>
 </mapper>

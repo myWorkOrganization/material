@@ -25,6 +25,7 @@ public class UserService{
             user.setUserPwd(MD5.MD5Password(register.getPwd()));
             user.setUserSex("M");
             user.setUserMail(register.getMail());
+            user.setDeptId(register.getDeptId());
 
             User userInfo = this.userMapper.selectUserInfo(user);
             if (userInfo != null) {
@@ -50,6 +51,7 @@ public class UserService{
         }
         HttpSession httpSession=request.getSession();
         httpSession.setAttribute("loginUserName",login.getUserName());
+        httpSession.setAttribute("deptId",userInfo.getDeptId());
         return new Result("success", "登陆成功");
     }
 }

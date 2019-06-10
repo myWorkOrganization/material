@@ -65,6 +65,10 @@
                    title : '是否过期',
                    width : 150
                }, {
+                   field : 'deptName',
+                   title : '部门',
+                   width : 150
+               },{
                    field : 'createTime',
                    title : '创建时间',
                    width : 150,
@@ -261,7 +265,7 @@
 </script>
 <body>
 <div class="easyui-layout" data-options="fit : true,border : false">
-    <div data-options="region:'north',title:'查询条件',border:false" style="height: 160px; overflow: hidden;">
+    <div data-options="region:'north',title:'查询条件',border:false" style="height: 180px; overflow: hidden;">
         <form id="searchForm">
             <table class="table table-hover table-condensed" style="">
                 <tr>
@@ -294,6 +298,12 @@
                             <option value="1">是</option>
                             <option value="0">否</option>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>部门</th>
+                    <td>
+                        <input id="deptId" class="easyui-combobox"  name="deptId" data-options="valueField:'deptId',textField:'deptName',panelHeight:'60px',width:'200px',height:'21px',  value:'', url:'/dictionary/listDept'">
                     </td>
                 </tr>
             </table>

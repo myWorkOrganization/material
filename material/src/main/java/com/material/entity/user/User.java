@@ -17,6 +17,7 @@ public class User implements Serializable{
     private String userMail;
     private String createTime;
     private String lastUpdateTime;
+    private String deptId;
 
     public long getUserId() {
         return userId;
@@ -72,5 +73,13 @@ public class User implements Serializable{
 
     public void setLastUpdateTime(String lastUpdateTime) {
         this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

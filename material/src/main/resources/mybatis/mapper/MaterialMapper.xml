@@ -12,8 +12,11 @@
                 materialBatchNumber,
                 if(date(now())>=date(validdate),'是','否') hadExpired,
                 date_format(createTime,'%Y-%m-%d %H:%m:%i') createTime,
-                date_format(lastUpdateTime,'%Y-%m-%d %H:%m:%i') lastUpdateTime
-       from material_manage
+                date_format(lastUpdateTime,'%Y-%m-%d %H:%m:%i') lastUpdateTime,
+                if(d.deptId='admin','-',d.deptName) deptName
+       from material_manage m
+       left join dictionary_dept d
+       on m.deptId=d.deptId
        <where>
             <if test="materialName!=null and materialName!=''">
                 materialName like concat('%',#{materialName},'%')
@@ -36,13 +39,19 @@
                     #{materialId}
                 </foreach>
             </if>
+            <if test="deptId!=null and deptId!=''">
+                and m.deptId =#{deptId}
+            </if>
+            <if test="belongDeptId!=null and belongDeptId!=''">
+                and m.deptId =#{belongDeptId}
+            </if>
        </where>
         order by validdate asc
         limit #{min},#{max}
     </select>
     <select id="listMaterialCount" resultType="int">
        select   count(0)
-       from material_manage
+       from material_manage m
        <where>
            <if test="materialName!=null and materialName!=''">
                materialName like concat('%',#{materialName},'%')
@@ -65,6 +74,12 @@
                    #{materialId}
                </foreach>
            </if>
+           <if test="deptId!=null and deptId!=''">
+               and m.deptId = #{deptId}
+           </if>
+           <if test="belongDeptId!=null and belongDeptId!=''">
+               and m.deptId = #{belongDeptId}
+           </if>
        </where>
     </select>
     <insert id="insertMaterial">
@@ -73,13 +88,15 @@
                                     validdate,
                                     materialNums,
                                     materialManufacturers,
-                                    materialBatchNumber)
+                                    materialBatchNumber,
+                                    deptId)
         values(                     #{materialName},
                                     #{productDate},
                                     #{validdate},
                                     #{materialNums},
                                     #{materialManufacturers},
-                                    #{materialBatchNumber})
+                                    #{materialBatchNumber},
+                                    #{deptId})
     </insert>
     <update id="updateMaterial">
         update material_manage
@@ -116,7 +133,8 @@
                                     validdate,
                                     materialNums,
                                     materialManufacturers,
-                                    materialBatchNumber)
+                                    materialBatchNumber,
+                                    deptId)
         values
         <foreach collection="list" item="item" separator=",">
             (                       #{item.materialName},
@@ -124,7 +142,8 @@
                                     #{item.validdate},
                                     #{item.materialNums},
                                     #{item.materialManufacturers},
-                                    #{item.materialBatchNumber})
+                                    #{item.materialBatchNumber},
+                                    #{item.deptId})
         </foreach>
     </insert>
 </mapper>

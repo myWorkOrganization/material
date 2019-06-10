@@ -44,7 +44,12 @@
                 var name=$("#name").val();
                 var pwd=$("#pwd").val();
                 var mail=$("#mail").val();
+                var deptId=$("#deptId").val();
                 var repeatPwd=$("#repeatPwd").val();
+                if(!deptId || deptId=="请选择部门"){
+                    $.messager.alert("通知","请选择部门");
+                    return;
+                }
                 if(pwd!=repeatPwd){
                     $.messager.alert("通知","密码不一致");
                     return;
@@ -57,7 +62,7 @@
                 $.ajax({
                     url:"/user/register",
                     type:"post",
-                    data:JSON.stringify({"name":name,"pwd":pwd,"repeatPwd":repeatPwd,"mail":mail}),
+                    data:JSON.stringify({"name":name,"pwd":pwd,"repeatPwd":repeatPwd,"mail":mail,"deptId":deptId}),
                     // data:$("#registerForm").serialize(),
                     dataType:"json",
                     contentType:"application/json",
@@ -86,6 +91,9 @@
         </div>
         <div style="margin-bottom:20px">
             <input class="easyui-textbox easyui-validatebox" label="邮箱:" name="mail" id="mail" labelPosition="top" data-options="required:true,validateOnBlur:true,validType:'email',missingMessage:'邮箱不能为空'" style="width:100%;height:52px">
+        </div>
+        <div>
+            <input id="deptId" class="easyui-combobox"  name="deptId" data-options="valueField:'deptId',textField:'deptName',panelHeight:'60px',width:'132%',height:'28px', label:'部门:', value:'请选择部门', url:'/dictionary/listDept'">
         </div>
         <div style="margin-bottom:20px">
             <input class="easyui-textbox easyui-validatebox" label="密码:" name="pwd" id="pwd" labelPosition="top" type="password" data-options="required:true,validateOnBlur:true,missingMessage:'密码不能为空'" style="width:100%;height:52px">

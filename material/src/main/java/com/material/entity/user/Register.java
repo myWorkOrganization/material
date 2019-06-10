@@ -25,6 +25,9 @@ public class Register implements Serializable {
     //用户邮箱
     @NotNull
     private String mail;
+    //部门ID
+    @NotNull
+    private String deptId;
 
     public String getName() {
         return name;
@@ -56,5 +59,13 @@ public class Register implements Serializable {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

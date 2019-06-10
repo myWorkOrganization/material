@@ -46,13 +46,13 @@ public class MaterialController {
     }
     @RequestMapping({"/datagrid"})
     @ResponseBody
-    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper) {
-        return this.materialService.dataGrid(materialRequest, pageHelper);
+    public DataGrid dataGrid(MaterialRequest materialRequest, PageHelper pageHelper ,HttpServletRequest httpServletRequest) {
+        return this.materialService.dataGrid(materialRequest, pageHelper ,httpServletRequest);
     }
     @RequestMapping({"/materialAdd"})
     @ResponseBody
-    public Result materialAdd(MaterialAddRequest materialAddRequest) {
-        return this.materialService.materialAdd(materialAddRequest);
+    public Result materialAdd(MaterialAddRequest materialAddRequest,HttpServletRequest httpServletRequest) {
+        return this.materialService.materialAdd(materialAddRequest,httpServletRequest);
     }
     @RequestMapping({"/materialEdit"})
     @ResponseBody
@@ -66,7 +66,7 @@ public class MaterialController {
     }
     @RequestMapping({"/materialImportFile"})
     @ResponseBody
-    public Result materialImportFile(@RequestParam("materialFile") MultipartFile multipartFile) {
-        return this.materialService.materialImportFile(multipartFile);
+    public Result materialImportFile(@RequestParam("materialFile") MultipartFile multipartFile,HttpServletRequest httpServletRequest) {
+        return this.materialService.materialImportFile(multipartFile,httpServletRequest);
     }
 }

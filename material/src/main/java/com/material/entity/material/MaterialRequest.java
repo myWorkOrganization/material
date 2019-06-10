@@ -11,6 +11,8 @@ public class MaterialRequest extends PageHelper {
     private String validdateEnd;
     private List<Long> materialIdList;
     private int hadExpired = -1;
+    private String deptId;
+    private String belongDeptId;
 
     public String getMaterialName() {
         return this.materialName;
@@ -66,5 +68,21 @@ public class MaterialRequest extends PageHelper {
 
     public void setHadExpired(int hadExpired) {
         this.hadExpired = hadExpired;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getBelongDeptId() {
+        return belongDeptId;
+    }
+
+    public void setBelongDeptId(String belongDeptId) {
+        this.belongDeptId = belongDeptId;
     }
 }
